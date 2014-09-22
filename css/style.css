@@ -1,0 +1,24 @@
+div btn-group {
+	margin: 0 auto;
+}
+
+/* unvisited link */
+a:link {
+    color: #FF0000;
+}
+
+/* visited link */
+a:visited {
+    color: #FF0000;
+}
+
+/* mouse over link */
+a:hover {
+    color: #F78181;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: #FF0000;
+}

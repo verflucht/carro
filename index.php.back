@@ -1,0 +1,311 @@
+<?php 
+  ob_start();
+  error_reporting(E_ALL); 
+  ini_set('display_errors', 'On');
+?>
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Importadora DP>> Stock Online</title>
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/vertical_slider.css">
+  <script src="js/jquery-1.11.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <script type="text/javascript"> 
+        function CheckForm() 
+        { 
+            var User= document.getElementById('inUser').value; //Se crea la variable User conteniendo el valor del input con id 'inUser' 
+            var Pass= document.getElementById('inPass').value; 
+            var errormsg= 'Debe completar: ' //Se crea un mensaje de error en la variable errormsg 
+            if(User == '') //Si la variable 'User' no tiene contenido: 
+                { 
+                var error= true; //crea la variable 'error' con valor verdadero (existe) 
+                var errormsg= errormsg + 'Nombre de Usuario'; 
+                } 
+            if(Pass == '') 
+                { 
+                var error= true; 
+                var errormsg= errormsg + 'Contraseña'; 
+                } 
+            if(error) //Si existe la variable 'error' (si el valor es verdadero, true): 
+            { 
+                alert(errormsg) //Muestra un mensaje de alerta con el contenido de la variable 'errormsg' 
+            } 
+            else //sino 
+            { 
+                document.getElementById('loginForm').submit(); //Hace un submit en el form con id 'loginForm' 
+            } 
+        } 
+    </script>
+
+</head>
+<body style="padding: 0px; background-image: url('img/back2.png'); background-repeat:no-repeat; background-size:cover;">
+<div id="userExist"></div>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1509290562641537',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/es_LA/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+</script>
+
+
+<div class="container">
+<?php
+    session_start(); //Esto inicia la sesión 
+
+    if (isset($_GET["end"])) {
+        if ($_GET["end"] == 1) {
+            unset($_SESSION['user']);
+            unset($_SESSION['time']);
+            session_destroy();
+        }   
+    }
+    
+
+
+    if(isset($_SESSION['user'])) //Si existe la variable de sesión 'user': 
+    { 
+        $_SESSION['time']= time(); //Se crea la variable de sesión 'time' con el valor de time() (ejemplo: 1339168896) 
+        if(isset($_SESSION['time'])) //Si existe la variable de sesión 'time': 
+        { 
+            $timeNow= time(); //Se asigna el valor de time() (ejemplo: 1339168963) a la variable timeNow 
+            $timeCount= $timeNow - $_SESSION['time']; //Se le asigna a la variable timeCount el valor de la variable timeNow menos la variable de sesión 'time' (1339168963 - 1339168896 = 67 segundos) 
+
+            if($timeCount>1200) //Si el valor de la variable timeCount es superior a 1200 (segundos, 20 minutos):  
+            { 
+                unset($_SESSION['user']); //Se destruye el valor de la variable de sesión 'user' 
+                $_SESSION['error'] = 'Su sesion ha expirado. Ingrese nuevamente.'; //Se le asigna un mensaje de error a la variable de sesión 'error' 
+            } 
+        } 
+    } 
+    if(isset($_SESSION['error'])) //Si existe la variable de sesión 'error': 
+    { 
+        echo '<div style="margin-bottom: -52px;" class="alert alert-danger" id="error"><p>'.$_SESSION['error'].'</p></div>'; //Muestra un div con el mensaje de error contenido en la variable de sesión 'error' 
+        unset($_SESSION['error']); //Destruye la variable de sesión 'error' 
+    } 
+    if(isset($_SESSION['user'])) //Si existe la variable de sesión 'user' 
+    {  
+        $_SESSION['time']= time(); //Se establece el valor time() de la variable de sesión 'time'.  
+        header('Location: stock.php'); //Redirecciona a la carpeta 'home' 
+    } 
+    else //si no existe la variable de sesión 'user' muestra el html siguiente: 
+    { 
+?>
+  <form class="form-signin" id="loginForm" method="POST" action="login.php">
+    <h1 class="form-signin-heading text-muted"><img src="img/logo.png" style="width: 250px; margin: 0 auto;" alt=""></h1>
+    <input type="text" id="inUser" name="inUser" class="form-control" placeholder="Mail" required="" autofocus="">
+    <input type="password" id="inPass" name="inPass" class="form-control" placeholder="Contrasena" required="">
+    <input type="button" class="btn btn-lg btn-danger btn-block" id="inForm" onclick="CheckForm()" value="Iniciar Sesión">
+    <!--<input type="button" class="btn btn-lg btn-info btn-block" id="" onclick="CrearCuenta()" value="Crear Cuenta">
+    <a href="#crearCuenta" id="buttonModalCrearCuenta" role="button" class="btn btn-lg btn-info btn-block" data-toggle="modal">Crear Cuenta</a>-->
+  </form>
+</div>
+
+
+  <!-- Modal1 -->
+  
+  <!-- Modal -->
+<div class="modal fade bs-modal-sm" id="crearCuenta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <br>
+        <div class="bs-example bs-example-tabs">
+            <ul id="myTab" class="nav nav-tabs">
+              <center><li class=""><h2><span class="label label-info">Crear Cuenta</span></h2></li></center>
+            </ul>
+        </div>
+      <div class="modal-body">
+        
+        <form class="form-horizontal">
+            <fieldset>
+            <!-- Sign Up Form -->
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="Email">Email:</label>
+              <div class="controls">
+                <input id="Email" name="Email" class="form-control" type="text" placeholder="JoeSixpack@sixpacksrus.com" class="input-large" required="">
+              </div>
+            </div>
+            
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="nombre">Nombre:</label>
+              <div class="controls">
+                <input id="nombre" name="nombre" class="form-control" type="text" placeholder="JoeSixpack" class="input-large" required="">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="apellido">Apellido:</label>
+              <div class="controls">
+                <input id="apellido" name="apellido" class="form-control" type="text" placeholder="Einstein" class="input-large" required="">
+              </div>
+            </div>
+            
+            <!-- Password input-->
+            <div class="control-group">
+              <label class="control-label" for="password">Contrasena:</label>
+              <div class="controls">
+                <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required="">
+              </div>
+            </div>
+            
+            
+            <!-- Multiple Radios (inline) -->
+            <br>
+            <div class="control-group">
+              <label class="control-label" for="humancheck">Detector de Humanos:</label>
+              <div class="controls">
+                <label class="radio inline" for="humancheck-0">
+                  <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">Soy un Robot</label>
+                <label class="radio inline" for="humancheck-1">
+                  <input type="radio" name="humancheck" id="humancheck-1" value="human">Soy un Humano</label>
+              </div>
+            </div>
+            
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="confirmsignup"></label>
+              <div class="controls">
+              </div>
+            </div>
+            </fieldset>
+            </form>
+            
+      </div>
+      <div class="modal-footer">
+      <center>
+        <a type="button" id="confirmsignup" name="confirmsignup" class="btn btn-success" value="">Registrar</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+    $("#confirmsignup").click(
+
+      function confirmmail() {
+      var mail = $("#Email").val();
+      var nombre = $("#nombre").val();
+      var apellido = $("#apellido").val();
+      var pass = $("#password").val();
+      
+      if(mail == "" || nombre == "" || apellido == "" || pass == ""){
+        alert("Dejaste algunos de los campos vacios, completalos para seguir!");
+      }
+      else{
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if(filter.test(mail)){
+          alert("entro");
+          $.ajax({  
+            type: "POST",
+            url: "register.php",
+            data: {mail:mail, nombre:nombre, apellido:apellido, pass:pass},
+            cache: false,
+            success: function(result){
+              if(result == "1"){
+                $('#crearCuenta').modal('toggle');
+                alert(result);
+                //location.reload();
+                $("#userExist").html('<div style="margin-bottom: -52px;" class="alert alert-danger" id="error"><p>Este mail ya esta registrado, intenta con otro!</p></div>');
+              }
+              else if(result == "0"){
+                alert(result);
+                window.location.replace("stock.php");
+              }
+              //$("#lista").html(result);
+            }
+          });
+        }
+        else{
+          alert("Mail incorrecto, intentalo denuevo!");
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+<?php } ?>

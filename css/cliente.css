@@ -1,0 +1,56 @@
+body{
+}
+
+.container {
+	width: 970px !important;
+	background-color: none;
+	border: 1px;
+	border-style: none;
+}
+
+.row {
+	width: 970px !important;
+}
+
+#profile_pic{
+	max-height: 70px;
+	max-width: 70px;
+}
+
+.btn{
+	border-radius: 0px;
+}
+
+div .inline_busqueda{
+	display: inline-block;
+}
+
+.buscar{
+	white-space: nowrap;
+}
+div .item{
+ 	background-color: white;
+ 	padding: 10px;
+ 	height: 210px;
+ 	max-height: 210px;
+ 	width: 460px;
+ 	margin-left: 20px;
+ }
+
+
+ .producto{
+ 	max-width: 100px;
+ 	max-height: 100px;
+ }
+
+
+
+ .logo{
+ 	max-width: 75px;
+ 	max-height: auto;
+ }
+
+ div .precio{
+ 	padding: 5px;
+ 	font-size: 1.4em;
+ }

@@ -1,0 +1,299 @@
+<?php 
+	ob_start();
+	header('Content-Type: text/html; charset=UTF-8'); 
+	error_reporting(E_ALL); 
+	ini_set('display_errors', 'off');
+
+	session_start(); 
+	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php 
+?>
+
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html lang="es">
+<head>
+	<title>CheckMart>> La Revolución en Compras</title>
+	<meta charset="UTF-8">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/responsiveslides.css">
+	<link rel="stylesheet" href="css/stock.css">
+
+
+	<!-- Latest compiled and minified JavaScript -->
+
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-1.11.1.min.js"></script>
+
+	<script src="js/responsiveslides.min.js"></script>
+
+	<script>
+	  $(function() {
+	    $(".rslides").responsiveSlides();
+	  });
+	</script>
+
+</head>
+
+
+<script type="text/javascript">
+	
+$(document).ready(function(){
+	$("#getdata").click(function(){
+		var busqueda = $("#producto").val();
+		// Returns successful data submission message when the entered information is stored in database.
+		var busqueda = busqueda;
+		if(busqueda=='')
+		{
+			alert("Eliga lo que desea buscar primero");
+		}
+		else
+		{
+			// AJAX Code To Submit Form.
+			$.ajax({
+			type: "POST",
+			url: "getdata.php",
+			data: {busqueda:busqueda},
+			cache: false,
+			success: function(result){
+				//alert(result);
+				$("#lista").html(result);
+			}
+		});
+	}
+	return false;
+	});
+});
+
+</script>
+
+<body>
+
+<!-- NAV BAR -->
+
+
+
+<div class="container-fluid" style="background-color:#e8e8e8">
+<div class="container container-pad" id="property-listings">
+
+<!-- CARRUSEL -->
+
+	<ul class="rslides" id="slider1" style="max-width: 1170px; margin: 0 auto; margin-bottom: 20px">	
+	  <li><img src="http://placehold.it/1170x500/11111" alt=""></li>
+	  <li><img src="http://placehold.it/1170x500/BBBBB" alt=""></li>
+	  <li><img src="http://placehold.it/1170x500/AAAAA" alt=""></li>
+	</ul>
+
+
+<!-- DESPLIEGE DE STOCK -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <h1></h1>
+          </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6"> 
+
+                <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+                 <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+                <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+                 <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+
+
+            </div>
+
+            <div class="col-sm-6">  
+
+                 <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+                 <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+
+                 <!-- Begin Listing: 609 W GRAVERS LN-->
+                <div class="brdr bgc-fff pad-10 box-shad btm-mrg-20 property-listing">
+                    <div class="media">
+                        <a class="pull-left" href="#" target="_parent">
+                        <img alt="image" class="img-responsive" src="img/tuxedo.jpg"></a>
+
+                        <div class="clearfix visible-sm"></div>
+
+                        <div class="media-body fnt-smaller">
+                            <a href="#" target="_parent"></a>
+
+                            <h4 class="media-heading">
+                              <div target="_parent">MARCA: <STRONG>LIFESTYLES</STRONG> <strong class="pull-right">STOCK</strong></div></h4>
+
+                            <ul class="list-inline mrg-0 btm-mrg-10 clr-535353">
+                                <li>MODELO: <STRONG>TUXEDO</STRONG></li> <strong class="pull-right">DISPONIBLE</strong>
+                            </ul>
+
+                            <p class="hidden-xs">Situated between fairmount
+                            park and the prestigious philadelphia cricket
+                            club, this beautiful 2+ acre property is truly
+                            ...</p><span class="fnt-smaller fnt-lighter fnt-arial">Courtesy of HS Fox & Roach-Chestnut Hill
+                            Evergreen</span>
+                        </div>
+                    </div>
+                </div><!-- End Listing-->
+            </div><!-- End Col -->
+        </div><!-- End row -->
+    </div><!-- End container -->
+</div>
+
+</body>
+</html>
