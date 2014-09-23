@@ -4,12 +4,12 @@ div btn-group {
 
 /* unvisited link */
 a:link {
-    color: #FF0000;
+    color: #ED3237;
 }
 
 /* visited link */
 a:visited {
-    color: #FF0000;
+    color: #ED3237;
 }
 
 /* mouse over link */
@@ -20,5 +20,13 @@ a:hover {
 
 /* selected link */
 a:active {
-    color: #FF0000;
+    color: #ED3237;
+}
+
+div .col-xs-5:hover{
+	color: #F78181;
+}
+
+.btn-warning{
+	background: #F78181!important;
 }

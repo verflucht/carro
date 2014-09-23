@@ -44,6 +44,7 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/cliente.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 	<!-- Latest compiled and minified JavaScript -->
@@ -146,6 +147,10 @@
 			<div class="col-xs-4 col-xs-offset-4">
 				<a class="btn btn-warning btn-lg btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#crearlista">Crear Lista</a>
 			</div>
+		</div>
+		<div class="row" style="margin-top: 40px;">
+			<a href="#"><div class="col-xs-5"><button class="btn btn-warning btn-lg btn-block">Propias</button></div></a>
+			<a href="#"><div class="col-xs-5 col-xs-offset-2	" style="background-color: #ED3237;	color: white!important; font-size: 20px;  padding-top: 10px;"><p class="text-center">Compartidas</p></div></a>
 		</div>
 		<div class="row col-xs-12 custyle">
             <table class="table table-striped custab" style="margin-top: 40px;">
