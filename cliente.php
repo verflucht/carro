@@ -5,6 +5,8 @@
 	ini_set('display_errors', 'off');
 	header('Content-Type: text/html; charset=UTF-8');  
 	session_start(); 
+	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php
+	mysql_query("SET NAMES 'utf8'");
 
 	if (isset($_SESSION['facebook'])){
     	$_SESSION['user'] = "";
@@ -21,7 +23,7 @@
 		$sqlSyntax= 'SELECT * FROM usuario WHERE mail = "'.$_SESSION['user'].'"'; //Se crea la sintaxis para la base de datos 
 		$_SESSION['id'] = $_SESSION['user'];
 	}
-	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php		
+
     $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
     if ($result == FALSE) { die(@mysql_error()); }
 

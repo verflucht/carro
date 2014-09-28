@@ -18,7 +18,9 @@
 	else{
 		$sqlSyntax= 'SELECT * FROM usuario WHERE mail = "'.$_SESSION['user'].'"'; //Se crea la sintaxis para la base de datos 
 	}
-	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php		
+	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php
+	mysql_query("SET NAMES 'utf8'");		
+    
     $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
     if ($result == FALSE) { die(@mysql_error()); }
 
@@ -85,15 +87,27 @@
 
 	<script type="text/javascript">
     $(function() {
-    $('.eraseList').on('click', function() {
-        var id = this.id
-              alert(result);
-            }
-          }
+		$('.eraseList').on('click', function() {
+    		var id = this.id
+    		if (window.confirm("¿Esta seguro que desea eliminar esta lista?")){
+				$.ajax({
+					type: "POST",
+					url: "eliminarlista.php",
+					data: {id:id},
+					cache: false,
+					success: function(result){
+						if (result == ''){
+						  window.location.reload();
+						}
+						else{
+						  alert(result);
+						}
+					}
+				});
+	        }
+
         });
-        }
-    });
-});
+  	});
   </script>
 <body style="background-image: url('img/barra_superior_gris.png'); background-repeat: repeat-y;">
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -188,7 +202,7 @@
                            		</a>
                 				</td>
             					<td class="text-center" style="padding:6px;">
-                					<a class="eraseList">
+                					<a id="'.$row['id_lista'].'" class="eraseList">
                             	<span style="padding: 14px; border: 1px solid grey; border-radius: 5px;"class="glyphicon glyphicon-trash"></span>
                             		</a>
                 				</td></tr>';
@@ -207,6 +221,7 @@
         <h4 class="modal-title" id="myModalLabel">Elige un nombre para tu lista</h4>
       </div>
       <div class="modal-body" style="padding-bottom: 0">
+        
         <form method="POST" action="categorias.php">
 	        <div class="form-group">
 	   			 <input type="text" class="form-control" id="nombrelista" name="nombrelista" placeholder="Nombre Lista">

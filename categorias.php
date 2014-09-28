@@ -6,7 +6,10 @@
 	header('Content-Type: text/html; charset=UTF-8');  
 	session_start(); 
 
-	if ($_POST['nombrelista'] != "") $_SESSION['nombrelista'] = $_POST['nombrelista'];
+	if ($_POST['nombrelista'] != ""){
+		$_SESSION['nombrelista'] = $_POST['nombrelista'];
+		$_SESSION['lista'] = array();
+	}
 
 	if (isset($_SESSION['facebook'])){
     	$_SESSION['user'] = "";
@@ -20,7 +23,8 @@
 	else{
 		$sqlSyntax= 'SELECT * FROM usuario WHERE mail = "'.$_SESSION['user'].'"'; //Se crea la sintaxis para la base de datos 
 	}
-	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php		
+	require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php
+	mysql_query("SET NAMES 'utf8'");	
     $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
     if ($result == FALSE) { die(@mysql_error()); }
 
@@ -143,11 +147,9 @@
 		<div class="row" style="margin-top: 30px; margin-bottom: 60px;">
 			<center><img src="img/barra_roja.png" alt="" style="height: 3px; width: 80%; "></center>
 			<p class="text-center" style="font-size: 20px; margin-top: 15px;">SELECCIONA UNA CATEGORÍA</p>
-			<?php 	echo $_SESSION['nombrelista'];
-					echo " ".$_SESSION['id'];
+			<?php 	
 					if ($_POST['nombrelista'] != ""){
-						$sqlSyntax = 'INSERT INTO lista (id_usuario, fecha)VALUES('.$id_usuario.',"'.$dia.'")';
-						echo $sqlSyntax;
+						$sqlSyntax = 'INSERT INTO lista (nombre_lista, id_usuario, fecha)VALUES("'.$_POST['nombrelista'].'",'.$id_usuario.',"'.$dia.'")';
 					    $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
 					    if ($result == FALSE) { die(@mysql_error()); }
 					    $_SESSION['id_lista'] =  mysql_insert_id();
