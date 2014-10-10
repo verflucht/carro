@@ -8,7 +8,7 @@
     mysql_query("SET NAMES 'utf8'");
 
 
-    $id_lista = $_POST['id'];
+    $id_lista = $_POST['id_lista'];
     #echo $_POST['busqueda'];
 
     $sqlSyntax = "DELETE FROM descripcion_producto_lista WHERE id_lista = $id_lista";
@@ -16,5 +16,7 @@
 
     $sqlSyntax = "DELETE FROM lista WHERE id_lista = $id_lista";
     mysql_query($sqlSyntax) or die(mysql_error());
+
+    header('Location: listas.php');
 
 ?>

@@ -99,7 +99,6 @@
   	$(function() {
 		$('.tipoLista').on('click', function() {
     		var id = this.id
-    		alert(id);
 			$.ajax({
 				type: "POST",
 				url: "tipolista.php",

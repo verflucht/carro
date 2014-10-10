@@ -163,11 +163,11 @@
 	<form method="GET" action="carrito.php">
 	<div class="container" style="margin-bottom:50px;" >
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=frescos"><img class="img_producto" src="img/frescos.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=frescos"><img class="img_producto" src="img/frescos.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">FRESCOS</p></button>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=carnespescados"><img class="img_producto" src="img/carnes_pescados.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=carnespescados"><img class="img_producto" src="img/carnes_pescados.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">CARNES/PESCADOS</p></a>
 			</div>
 			<div class="col-xs-3">
@@ -175,35 +175,35 @@
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">DESPENSA</p></a>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=panaderia"><img class="img_producto" src="img/panaderia.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=panaderia"><img class="img_producto" src="img/panaderia.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">PANADERIA</p></a>
 			</div>
 	</div>
 	<div class="container" style="margin-bottom:50px;" >
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=congelados"><img class="img_producto" src="img/congelados.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=congelados"><img class="img_producto" src="img/congelados.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">CONGELADOS</p></a>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=dulces"><img class="img_producto" src="img/dulces.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=dulces"><img class="img_producto" src="img/dulces.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">DULCES</p></a>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=licores"><img class="img_producto" src="img/licores.jpeg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=licores"><img class="img_producto" src="img/licores.jpeg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">LICORES</p></a>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=perfumeria"><img class="img_producto" src="img/perfumeria.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=perfumeria"><img class="img_producto" src="img/perfumeria.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">PERFUMERIA</p></a>
 			</div>
 	</div>
 	<div class="container" style="margin-bottom:50px;" >
 			<div class="col-xs-3 col-xs-offset-3">
-				<a href="carrito.php?cat=limpieza"><img class="img_producto" src="img/limpieza.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=limpieza"><img class="img_producto" src="img/limpieza.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">LIMPIEZA</p></a>
 			</div>
 			<div class="col-xs-3">
-				<a href="carrito.php?cat=hogar"><img class="img_producto" src="img/hogar.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
+				<a class="disabled" href="carrito.php?cat=hogar"><img class="img_producto" src="img/hogar.jpg" style="width: 200px; HEIGHT: 120px; margin: 0 auto;">
 				<p class="text-center" style="font-size: 20px; margin-top: 15px;">HOGAR</p></a>
 			</div>
 	</div>

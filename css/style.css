@@ -62,3 +62,9 @@ div .col-xs-5:hover{
    border-top-color: #1b435e;
    background: #1b435e;
    }
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: grey;
+}

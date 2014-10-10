@@ -10,29 +10,39 @@
 	require_once 'mysqlConnection.php';
 	mysql_query("SET NAMES 'utf8'");
 
-	$id_lista = $_SESSION['id_lista'];
-	$contenido_lista = $_SESSION['lista'];
+	if (isset($_SESSION['id_lista']) AND isset($_SESSION['lista'])) {		# code...
 
-	print_r($contenido_lista);
+		$id_lista = $_SESSION['id_lista'];
+		$contenido_lista = $_SESSION['lista'];
 
-	$sqlSyntax = 'INSERT INTO descripcion_producto_lista VALUES ';
-	//Crear la sintaxis para llenar la lista
-	$numItems = count($contenido_lista);
-	$i = 0;
-	foreach ($contenido_lista as $item => $value){
-		$sqlSyntax .= '('.$id_lista.','.$item.','.$value.',0),';
-		if(++$i === $numItems){
-			//Ultimo elemento del array
-			$sqlSyntax .= '('.$id_lista.','.$item.','.$value.',0)';
+		print_r($id_lista);
+		print_r($contenido_lista);
+
+		$sqlSyntax = 'INSERT INTO descripcion_producto_lista VALUES ';
+		//Crear la sintaxis para llenar la lista
+		$numItems = count($contenido_lista);
+		$i = 0;
+		foreach ($contenido_lista as $item => $value){
+			if(++$i === $numItems){
+				//Ultimo elemento del array
+				$sqlSyntax .= '('.$id_lista.','.$item.','.$value.',0)';
+			}
+			else{
+				$sqlSyntax .= '('.$id_lista.','.$item.','.$value.',0),';
+			}
 		}
-	}
-	print_r($sqlSyntax);
 
-	$result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
-    if ($result == FALSE) { die(@mysql_error()); }
+		print_r($sqlSyntax);
 
-    header('Location: listas.php');
+		$result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
+	    if ($result == FALSE) { die(@mysql_error()); }
 
-    unset($_SESSION['lista']);
-    unset($_SESSION['id_lista']);
+	    unset($_SESSION['lista']);
+	    unset($_SESSION['id_lista']);
+
+	    //header('Location: listas.php');
+    }
+    else {
+    	//header('Location: error.php');
+    }
  ?>

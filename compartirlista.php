@@ -36,7 +36,7 @@
 	
 
 ?>
-
+¡²²
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html lang="es">
@@ -58,23 +58,25 @@
 			{
 			    $(document).on('click', '.btn-add', function(e)
 			    {
-			        e.preventDefault();
-
-			        var controlForm = $('.controls form:first'),
-			            currentEntry = $(this).parents('.entry:first'),
-			            newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
-			        newEntry.find('input').val('');
-			        controlForm.find('.entry:not(:last) .btn-add')
-			            .removeClass('btn-add').addClass('btn-remove')
-			            .removeClass('btn-success').addClass('btn-danger')
-			            .html('<span class="glyphicon glyphicon-minus"></span>');
-			    }).on('click', '.btn-remove', function(e)
-			    {
-					$(this).parents('.entry:first').remove();
-
-					e.preventDefault();
-					return false;
+			        var id = this.id
+			        var mail = $('#inputEmail').val();
+			        $.ajax({
+						type: "POST",
+						url: "agregaramigos.php",
+						data: {id:id,mail:mail},
+						cache: false,
+						success: function(result){
+							if (result == '') {
+								alert("Usuario no Encontrado, intenta otra vez");
+							}
+							else{
+								$("#amigos").append(result);
+							}
+							//$("#amigos").html(" ");
+							
+							//$("#amigos").html(result);
+						}
+					});
 				});
 			});
 
@@ -134,14 +136,14 @@
 			<div class="col-xs-3 col-xs-offset-4">
 			<form action="" method="post" accept-charset="utf-8">
 				<input type="hidden" name="inputText" value="mail">
-				<button type="submit" name="SubmitButton"><img src="img/botones/mail.png" alt=""></button>
+				<button type="submit" class="inForm" name="SubmitButton"><img src="img/botones/mail.png" alt=""></button>
 			</form>
 			</div>
 
 			<div class="col-xs-3">
 				<form action="" method="post" accept-charset="utf-8">
 				<input type="hidden" name="inputText" value="facebook">
-				<button type="submit" name="SubmitButton"><img src="img/botones/facebook2.png" alt=""></button>
+				<button type="submit" class="inForm" name="SubmitButton"><img src="img/botones/facebook2.png" alt=""></button>
 			</form>
 			</div>
 		</div>
@@ -149,29 +151,33 @@
 	if(isset($_POST['id_lista']))
 		$_SESSION['id_lista'] = $_POST['id_lista'];
 	if(isset($_POST['SubmitButton'])){ //check if form was submitted
-		$input = $_POST['inputText']; //get input text
+		//$input = $_POST['inputText']; //get input text
 		//echo "Success! You entered: ".$input." ".$_SESSION['id_lista'];
-		echo '<div class="container">
-				<div class="row">
-			        <div class="control-group" style="width: 300px; margin: 0 auto; margin-top: 40px;" id="fields">
-			            <label class="control-label" for="field1">Agrega todos los amigos que quieras!</label>
-			            <div class="controls" style="width: 260px; margin: 0 auto;" > 
-			                <form role="form" autocomplete="off">
-			                    <div class="entry input-group">
-			                        <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
-			                    	<span class="input-group-btn">
-			                            <button class="btn btn-success btn-add" type="button">
-			                                <span class="glyphicon glyphicon-plus"></span>
-			                            </button>
-			                        </span>
-			                    </div>
-			                </form>
-			            <br>
-			            </div>
-			        </div>
-				</div>
-			</div>';
-	}    
+		echo '
+				  <div class="form-group" style="margin-left: 200px; margin-top: 20px;">
+				    <label for="inputEmail3" class="col-sm-2 control-label">Agrega un amigo</label>
+				    <div class="col-sm-4" style="padding-right:0;">
+				      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+				    </div>
+				    <div class="col-sm-4" style="padding-left:0;">
+				      <button style="border: 1 px; border-radius: 5px;" id="'.$_SESSION['id_lista'].'" value="'.$_SESSION['id_lista'].'" type="submit" class="btn btn-success btn-add">+</button>
+				    </div>				  
+				  </div>
+				';
+		}   
  ?>
+
+<br><br><br>
+<form method="post" action="compartir.php">
+<div id="amigos">
+
+</div>
+<br><br>
+ <div class="col-xs-5 col-xs-offset-5">
+ 	<button style="border: 1 px; border-radius: 5px;" type="submit" class="btn btn-info btn-lg">Compartir</button>
+</div>
+</form>
+
+ 
 </body>
 </html>

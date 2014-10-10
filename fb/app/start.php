@@ -32,6 +32,13 @@ try {
 		$graphObjectClass = $response->getGraphObject(GraphUser::className());
 
 		$facebook_user = $graphObjectClass;
+
+		$_SESSION['friendlist'] = (new FacebookRequest(
+			  $session, 'GET', '/me/friends'
+			))->execute()->getGraphObject(GraphUser::className());
+
+			//echo '<pre>';
+			//print_r($user_friends);
 	endif;
 } catch(FacebookRequestException $ex) {
   // When Facebook returns an error

@@ -82,7 +82,7 @@
 		          cache: false,
 		          success: function(result){
 		            if (result != ''){
-		              alert("error");
+		              alert("error"+"  "+result);
 		            }
 		            else{
 		              alert("Producto Agregado al carro");

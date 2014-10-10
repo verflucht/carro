@@ -10,6 +10,7 @@
 
 	$id = $_POST['id'];
 	$cantidad = $_POST['cantidad'];
+	$encontrado = 0;
 
 	if (!isset($_SESSION['lista'])) {
 		echo "Seleccione una Lista primero";
@@ -22,17 +23,14 @@
 		foreach ($_SESSION['lista'] as $key => $value) {
 			if($_SESSION['lista'][$key] == $id){
 				$_SESSION['lista'][$key][$value] = $cantidad;
-				break;
-			}
-			else{
-				$_SESSION['lista'][$id] = $cantidad;
-				break;
+				$encontrado = 1;
 			}
 		}
-
+		if ($encontrado == 0) {
+			$_SESSION['lista'][$id] = $cantidad;
+		}
 
 		#print_r("Producto Agregado al Carro");
 	}
-	//print_r($_SESSION['lista']);
 
 ?>
