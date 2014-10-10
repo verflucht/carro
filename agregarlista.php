@@ -8,22 +8,31 @@
 	session_start();
 	mysql_query("SET NAMES 'utf8'");
 
-	if ($_SESSION['lista'] == "") {
-		echo "no se ha seleccionado una lista para agregar";
+	$id = $_POST['id'];
+	$cantidad = $_POST['cantidad'];
+
+	if (!isset($_SESSION['lista'])) {
+		echo "Seleccione una Lista primero";
+	}
+	else if($cantidad == "0"){
+		unset($_SESSION['lista'][$id]);
 	}
 	else{
-		$id = $_POST['id'];
-		$cantidad = $_POST['cantidad'];
 
-		if (array_key_exists($id, $_SESSION['lista'])) {
-			if ($_SESSION['lista'][$id] != $cantidad) {
+		foreach ($_SESSION['lista'] as $key => $value) {
+			if($_SESSION['lista'][$key] == $id){
+				$_SESSION['lista'][$key][$value] = $cantidad;
+				break;
+			}
+			else{
 				$_SESSION['lista'][$id] = $cantidad;
+				break;
 			}
 		}
-		else{
-			$_SESSION['lista'] = array($id => $cantidad) + $_SESSION['lista'];
-		}
-		print_r($_SESSION['lista']);
+
+
+		#print_r("Producto Agregado al Carro");
 	}
+	//print_r($_SESSION['lista']);
 
 ?>

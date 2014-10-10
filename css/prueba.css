@@ -71,3 +71,20 @@ a:hover{
 	width: 60%;
 	height: auto;
 }
+
+#inForm{
+	background: none;
+	border: none;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+.glyphicon
+{
+    font-size: 12px;
+}

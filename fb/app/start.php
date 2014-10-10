@@ -14,7 +14,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://checkmart.hostreo.com/index.php');
+$helper = new FacebookRedirectLoginHelper('http://checkmart.cl/index.php');
 
 try {
 	$session = $helper->getSessionFromRedirect();

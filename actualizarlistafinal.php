@@ -13,9 +13,20 @@
 	$id_lista = $_SESSION['id_lista'];
 	$contenido_lista = $_SESSION['lista'];
 
-	print_r($contenido_lista);
+	//UPDATE LOS QUE EXISTEN EN EL ARRAY Y EN DESC_PROD
+	/*
+		INSERT INTO table (id, name, age) 
+		VALUES(1, "A", 19) 
+		ON DUPLICATE KEY 
+		UPDATE 
+		name = VALUES(name), age = VALUES(age)
+	*/
+	$sqlSyntax = 'DELETE FROM descripcion_producto_lista WHERE id_lista = '.$id_lista;
+	$result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
+    if ($result == FALSE) { die(@mysql_error()); }
 
-	$sqlSyntax = 'INSERT INTO descripcion_producto_lista VALUES ';
+    //SELECCIONAR LOS DATOS, si se igualan los del arreglo 
+	$sqlSyntax = 'INSERT INTO descripcion_producto_lista (id_lista, id_producto, cantidad, isChecked) VALUES ';
 	//Crear la sintaxis para llenar la lista
 	$numItems = count($contenido_lista);
 	$i = 0;
@@ -31,8 +42,11 @@
 	$result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
     if ($result == FALSE) { die(@mysql_error()); }
 
-    header('Location: listas.php');
+    //INSERT LOS QUE ESTEN EN EL ARRAY PERO NO ESTEN EN LA BD
 
     unset($_SESSION['lista']);
     unset($_SESSION['id_lista']);
+
+    header('Location: listas.php');
+
  ?>

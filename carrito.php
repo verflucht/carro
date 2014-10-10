@@ -8,6 +8,7 @@
 	require_once 'mysqlConnection.php';
 	mysql_query("SET NAMES 'utf8'");
 
+
 	if (isset($_SESSION['facebook'])){
     	$_SESSION['user'] = "";
 	}
@@ -32,7 +33,6 @@
     		$row['url_foto'] = "img/default-user-men.png";
     	}	
 	}
-
  ?>
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -43,61 +43,13 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/cliente.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/styles.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 	<!-- Latest compiled and minified JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">
-    	$(document).ready(function(){
 
-    		// cada vez que se cambia el valor del combo
-		    $("#comboSubcategorias").change(function() {
-
-		        // obtenemos el valor seleccionado
-		        var subCategoria = $(this).val();
-		        $("#resultadosBusqueda").html("");
-		        // si es 0, no es subcategoria
-		        if(subCategoria != 0)
-		        {
-		            //creamos un objeto JSON
-		            $.ajax({
-					type: "POST",
-					url: "subsubcategorias.php",
-					data: {subCategoria:subCategoria},
-					cache: false,
-					success: function(result){
-						//alert(result);
-						$("#comboSubsubcategorias").html(result);
-					}
-				});
-		        }
-		    });
-
-		    $("#comboSubsubcategorias").change(function() {
-		    	var subSubcategorias = $("#comboSubsubcategorias option:selected").text();
-		    	$("#resultadosBusqueda").html(" ");
-		    	//alert("asdad "+subSubcategorias);
-		        // si es 0, no es subcategoria
-		        if(subSubcategorias != 0)
-		        {
-
-		            //creamos un objeto JSON
-		            $.ajax({
-						type: "POST",
-						url: "subsubcategorias.php",
-						data: {subSubcategorias:subSubcategorias},
-						cache: false,
-						success: function(result){
-							//alert(result);
-							$("#resultadosBusqueda").html(result);
-						}
-					});
-		        }
-		    });
-		}); 
-
-    </script>
     <script type="text/javascript">
     	$(document).on('click', '.number-spinner button', function () {    
 			var btn = $(this),
@@ -123,25 +75,49 @@
 			//var nombreProducto = ;
 			id = this.id
         	var cantidad = $('#id_'+this.id).val()
-        	if (cantidad != "0"){
         		$.ajax({
 		          type: "POST",
 		          url: "agregarlista.php",
 		          data: {cantidad:cantidad,id:id},
 		          cache: false,
 		          success: function(result){
-		            if (result == ''){
+		            if (result != ''){
 		              alert("error");
 		            }
 		            else{
-		              alert("Producto Agregado al Carro");
+		              alert("Producto Agregado al carro");
 		            }
 		            //  $("#lista").html(result);
 		            
 		          }
 		        });
-        	}
-        	else alert("Debe seleccionar una cantidad");
+
+		});
+    </script>
+    <script type="text/javascript">
+    	$(document).on('click', '.paginationbutton', function () {    
+			
+			//var idProducto = this.id;
+			//var nombreProducto = ;
+			var pagina = this.id
+			//alert(pagina);
+			//alert(subsubcategoria);
+        		$.ajax({
+		          type: "POST",
+		          url: "subsubcategorias.php",
+		          data: {pagina:pagina},
+		          cache: false,
+		          success: function(result){
+		            if (result == ''){
+		              alert(result);
+		            }
+		            else{
+		              $("#resultadosBusqueda").html(result);
+		            }
+		            //  $("#lista").html(result);
+		          }
+	        });
+
 		});
     </script>
     <script type="text/javascript">
@@ -154,12 +130,12 @@
         	if (cantidad != ""){
         		$.ajax({
 		          type: "POST",
-		          url: "actualizarLista.php",
+		          url: "agregarlista.php",
 		          data: {cantidad:cantidad,id:id},
 		          cache: false,
 		          success: function(result){
-		            if (result == ''){
-		              alert("error");
+		            if (result != ''){
+		              alert(result);
 		            }
 		            else{
 		            	//alert(result);
@@ -172,6 +148,55 @@
         	}
         	else alert("Debe seleccionar una cantidad");
 		});
+    </script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+			
+    		// cada vez que se cambia el valor del combo
+		    $("#comboSubcategorias").change(function() {
+
+		        // obtenemos el valor seleccionado
+		        var subCategoria = $(this).val();
+		        //alert(subCategoria);
+		        $("#resultadosBusqueda").html("");
+		        // si es 0, no es subcategoria
+		        if(subCategoria != 0)
+		        {
+		            //creamos un objeto JSON
+		            $.ajax({
+					type: "POST",
+					url: "subsubcategorias.php",
+					data: {subCategoria:subCategoria},
+					cache: false,
+					success: function(result){
+						//alert(result);
+						$("#comboSubsubcategorias").html(result);
+					}
+				});
+		        }
+		    });
+
+		    $("#comboSubsubcategorias").change(function() {
+		    	var subSubcategorias = $("#comboSubsubcategorias option:selected").text();
+		    	$("#resultadosBusqueda").html(" ");
+		    	//alert("asdad "+subSubcategorias);
+		        // si es 0, no es subcategoria
+		        if(subSubcategorias != 0)
+		        {
+		            //creamos un objeto JSON
+		            $.ajax({
+						type: "POST",
+						url: "subsubcategorias.php",
+						data: {subSubcategorias:subSubcategorias},
+						cache: false,
+						success: function(result){
+							//alert(result);
+							$("#resultadosBusqueda").html(result);
+						}
+					});
+		        }
+		    });
+		}); 
     </script>
 </head>
 <body>
@@ -188,9 +213,10 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Buscar</a></li>
+            <li><a href="cliente.php">Buscar</a></li>
             <li><a href="listas.php">Listas</a></li>
             <li><a href="#promociones">Promociones</a></li>
+            <li><a href="categorias.php">Categorías</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Perfil</a></li>
@@ -214,9 +240,19 @@
 				<form action="categorias.php" method="post" accept-charset="utf-8">
 					<button type="submit" href="categorias.php" class="btn btn-lg btn-info">VOLVER A CATEGORIAS</button>
 				</form>
-				<form action="finalizarlista.php" method="post" accept-charset="utf-8">
-		    		<button class="btn btn-lg btn-success">FINALIZAR LISTA</button>
-	    		</form>
+				<?php 
+					if( isset($_SESSION['lista']) AND isset($_SESSION['update'])){
+						echo '	<form action="actualizarlistafinal.php" method="post" accept-charset="utf-8">
+		    						<button class="btn btn-lg btn-success">ACTUALIZAR LISTA</button>
+    							</form>';
+					}
+					else if(isset($_SESSION['lista'])){
+						echo '	<form action="finalizarlista.php" method="post" accept-charset="utf-8">
+		    						<button class="btn btn-lg btn-success">FINALIZAR LISTA</button>
+								</form>';
+					}
+				
+				 ?>
 			</div>
 			<div class="col-xs-1" style="padding: 10px;">
 				<!-- <button class="btn btn-info btn-medium">Editar</button><br> -->
@@ -232,13 +268,13 @@
 		<div class="col-xs-6 col-xs-offset-3" style="margin-bottom: 30px;">
 			<h3 class="text-center">Selecciona una Subcategoria</h3>
 	<?php 
+
 		$sqlSyntax = 'SELECT subcategoria FROM 
 				(
 					SELECT * FROM producto
 					ORDER BY categoria
 				) t1 WHERE categoria = "'.$_GET['cat'].'" GROUP BY subcategoria';
 
-		#print_r($sqlSyntax);
 		$result= @mysql_query($sqlSyntax);
         if ($result == FALSE) { die(@mysql_error()); }
         echo '<select id="comboSubcategorias" class="form-control" style="margin-top: 30px; margin-bottom: 30px;">';
@@ -247,9 +283,13 @@
 	     echo '<option value="'.$row['subcategoria'].'">'.$row['subcategoria'].'</option>';
 	  	}
         echo '</select>';
+
 	?>
+		<div id="working" style="display: none;"><img src="img/ajax-loader.gif" alt="loading..."></div>
 		<div id="comboSubsubcategorias"></div>        
     </div>
     <div id="resultadosBusqueda"></div>
+
+     
 </body>
 </html>

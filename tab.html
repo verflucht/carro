@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CheckMart>> La Revolución en Compras</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/cliente.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    $('#rut').focus(function(){
+				$(document).keydown(function(objEvent) {
+			 
+			    if (objEvent.keyCode == 9) {  //tab pressed
+			        objEvent.preventDefault(); // stops its action
+				    }
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+
+<div style="width: 200px; margin: 0 auto; margin-top:100px;">
+RUT <br>
+<input id="rut" type="text" name="" value="" placeholder="" autofocus>
+PASSWORD <br>
+<input type="password" name="" value="" placeholder="Password">
+</div>
+
+</body>
+</html>

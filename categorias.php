@@ -6,6 +6,7 @@
 	header('Content-Type: text/html; charset=UTF-8');  
 	session_start(); 
 
+
 	if ($_POST['nombrelista'] != ""){
 		$_SESSION['nombrelista'] = $_POST['nombrelista'];
 		$_SESSION['lista'] = array();
@@ -50,6 +51,8 @@
 	$m = $todayh[mon];
 	$y = $todayh[year];
 	$dia = $d."/".$m."/".$y;
+
+	echo $_SESSION['lista'];
 ?>
 
 <!DOCTYPE html>
@@ -149,7 +152,7 @@
 			<p class="text-center" style="font-size: 20px; margin-top: 15px;">SELECCIONA UNA CATEGORÍA</p>
 			<?php 	
 					if ($_POST['nombrelista'] != ""){
-						$sqlSyntax = 'INSERT INTO lista (nombre_lista, id_usuario, fecha)VALUES("'.$_POST['nombrelista'].'",'.$id_usuario.',"'.$dia.'")';
+						$sqlSyntax = 'INSERT INTO lista (nombre_lista, id_usuario, fecha) VALUES("'.$_POST['nombrelista'].'",'.$id_usuario.',"'.$dia.'")';
 					    $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
 					    if ($result == FALSE) { die(@mysql_error()); }
 					    $_SESSION['id_lista'] =  mysql_insert_id();

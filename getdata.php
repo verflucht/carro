@@ -4,15 +4,18 @@ ob_start();
 header('Content-Type: text/html; charset=UTF-8'); 
 error_reporting(E_ALL); 
 ini_set('display_errors', 'Off');
+session_start();
 
 require_once 'mysqlConnection.php'; //Requiere el archivo 'SqlConnection.php 
+mysql_query("SET NAMES 'utf8'");
 
-$busqueda = $_POST['busqueda'];
+if (isset($_POST['busqueda'])){
+    $_SESSION['busqueda'] = $_POST['busqueda'];
+}
 #echo $_POST['busqueda'];
 //Query of listado database
 
-mysql_query("SET NAMES 'utf8'");
-$sqlSyntax= "SELECT * FROM producto WHERE descripcion LIKE '%".$busqueda."%' ORDER BY marca ASC"; 
+$sqlSyntax= "SELECT * FROM producto WHERE descripcion LIKE '%".$_SESSION['busqueda']."%' ORDER BY marca ASC"; 
 $listado = mysql_query($sqlSyntax) or die(mysql_error());
 
 //Output results
@@ -68,7 +71,7 @@ else
             <div class="item col-xs-6" style="height: auto; border: 1px; border-style: solid; margin-bottom: 15px;">
                 <div class="col-xs-3">
                     <img class="producto" src="'.$row['url_imagen'].'" alt="">
-                    <button type="button" class="btn btn-danger" style="width: 100px; margin-top: 30px;">Agregar</button>
+                    <!--<button type="button" class="btn btn-danger" style="width: 100px; margin-top: 30px;">Agregar</button>-->
                 </div>
                 <div class="col-xs-9" style="background-color: none; height: 120px;">
                     <p>Marca: <strong>'.$row['marca'].'</strong></p>

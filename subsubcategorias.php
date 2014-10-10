@@ -9,13 +9,63 @@
 	require_once 'mysqlConnection.php';
 	mysql_query("SET NAMES 'utf8'");
 
-	if (isset($_POST['subSubcategorias'])){
-		$subsubcategoria = $_POST['subSubcategorias'];
+	if(isset($_POST['subCategoria'])) {
+
+		// esta función se va a llamar al cargar el primer combo
+	    $subsubcategoria = array();
+	    $subsubcategoria = "<h3 class='text-center'>Selecciona un tipo de producto</h3>";
+	    $sqlSyntax = 'SELECT subsubcategoria FROM 
+				(
+					SELECT * FROM producto
+					ORDER BY subsubcategoria
+				) t1
+				WHERE subcategoria = "'.$_POST['subCategoria'].'" GROUP BY subcategoria';
+
+		$result= @mysql_query($sqlSyntax);
+	    if ($result == FALSE) { die(@mysql_error()); }
+	  	$subsubcategoria .= '<select id="comboSubsubcategoria" class="form-control"><option value="0">Selecciona una opción</option>';
+		while($row = mysql_fetch_array($result)){
+	     $subsubcategoria .= '<option value="'.$row['subsubcategoria'].'">'.$row['subsubcategoria'].'</option>';
+	  	}
+	  	$subsubcategoria .= '</select>';
+	    // devolvemos el arreglo
+	    echo $subsubcategoria;
+	}
+
+	else {
+
+		if (isset($_POST['subSubcategorias'])) {
+			$_SESSION['subsubcategorias'] = $_POST['subSubcategorias'];
+		}
+
+		//echo $_SESSION['subsubcategorias'];
+
 		#echo $_POST['busqueda'];
 		//Query of listado database
+		$sqlSyntax= "SELECT * FROM producto WHERE subsubcategoria = '".$_SESSION['subsubcategorias']."' ORDER BY marca ASC";
+		$result = mysql_query($sqlSyntax) or die(mysql_error());
+		$num_total_registros = mysql_num_rows($result);
 
-		mysql_query("SET NAMES 'utf8'");
-		$sqlSyntax= "SELECT * FROM producto WHERE subsubcategoria = '".$subsubcategoria."' ORDER BY marca ASC"; 
+		//echo $num_total_registros;
+
+		//Si hay registros
+		//numero de registros por página
+		$rowsPerPage = 10;
+
+		//por defecto mostramos la página 1
+	    $pageNum = 1;
+
+	    // si $_POST['page'] esta definido, usamos este número de página
+	    if(isset($_POST['pagina'])) {
+	        sleep(1);
+	        $pageNum = $_POST['pagina'];
+	    }
+
+	    //contando el desplazamiento
+	    $offset = ($pageNum - 1) * $rowsPerPage;
+	    $total_paginas = ceil($num_total_registros / $rowsPerPage);
+
+		$sqlSyntax= "SELECT * FROM producto WHERE subsubcategoria = '".$_SESSION['subsubcategorias']."' ORDER BY marca ASC LIMIT ".$offset.", ".$rowsPerPage; 
 		$listado = mysql_query($sqlSyntax) or die(mysql_error());
 
 		//Output results
@@ -42,7 +92,59 @@
 		}
 		else
 		{
-		    $output_string = '<div class="container" style="margin-top: 30px;"><div class="row">';
+			$output_string = "";
+			
+			 if ($total_paginas > 1) {
+			    $output_string .= '<div class="row col-xs-4 col-xs-offset-2"><div class="pagination">';
+			    $output_string .= '<ul>';
+			    if ($pageNum != 1)
+			        $output_string .= '<li><a class="paginationbutton" id="'.($pageNum-1).'">Anterior</a></li>';
+		        for ($i=1;$i<=$total_paginas;$i++) {
+		        	if ($total_paginas > 3){
+			            if ($pageNum == 1){
+		            		if($i == 4){
+			                	$output_string .= '<li><a>...</a></li>';
+			                	break;
+		            		}
+		            		else{
+		            			if($pageNum == $i)
+		            				$output_string .= '<li><a style="background-color: #EB2836; color: white;">'.$i.'</a></li>';
+		            			else
+			                		$output_string .= '<li><a class="paginationbutton" id="'.$i.'">'.$i.'</a></li>';
+		            		}
+		            	}
+	            		else{
+	            			if(($i == 1 && $total_paginas > 4) || ($i == $total_paginas && $total_paginas > 4)){
+			                	$output_string .= '<li><a>...</a></li>';
+	            			}
+	            			else if(($pageNum - 1) == $i || ($pageNum + 1) == $i){
+			                	$output_string .= '<li><a class="paginationbutton" id="'.$i.'">'.$i.'</a></li>';
+				            }
+				            else if ($pageNum == $i){
+				                //si muestro el índice de la página actual, no coloco enlace
+				                $output_string .= '<li><a style="background-color: #EB2836; color: white;">'.$i.'</a></li>';
+			            	}
+	            		}
+	       		 	}
+		            else{
+			            if ($pageNum == $i)
+			                //si muestro el índice de la página actual, no coloco enlace
+			                $output_string .= '<li><a style="background-color: #EB2836; color: white;">'.$i.'</a></li>';
+			            else
+			                //si el índice no corresponde con la página mostrada actualmente,
+			                //coloco el enlace para ir a esa página
+			                $output_string .= '<li><a class="paginationbutton" id="'.$i.'">'.$i.'</a></li>';
+	         		}
+	         	}
+	         	if ($pageNum != $total_paginas)
+	             	$output_string .= '<li><a class="paginationbutton" id="'.($pageNum+1).'">Siguiente</a></li>';
+	         	$output_string .= '</ul>';
+	          	$output_string .= '</div></div>';
+			}
+
+		    $output_string .= '<div class="container" style="margin-top: 30px;"><div class="row">';
+
+
 		    while($row = mysql_fetch_assoc($listado))
 		    {
 		        $logo_lider = "img/lider-color.png";
@@ -114,7 +216,7 @@
 		                <div class="col-xs-9" style="background-color: none; height: 120px;">
 		                    <p>Marca: <strong>'.$row['marca'].'</strong></p>
 		                    <p>Categoria: <strong>'.$row['categoria'].'</strong></p>
-		                    <p>Descripción: <strong>'.$row['descripcion'].'</strong></p>
+		                    <p>Descripción: <strong>'.$row['descripcion'].' '.$row['metrica'].'</strong></p>
 		                </div>
 		                <div class="col-xs-3"></div>
 		                <div class="col-xs-9">
@@ -132,33 +234,14 @@
 		            </div>
 		        ';
 		    }
+		    
 		    $output_string .= '</div></div>';
+
+		   
 		}
 		mysql_close();
 		// This echo for jquery 
 		echo $output_string;
 		#json_encode($output_string);
-	}
-	else {
-
-		// esta función se va a llamar al cargar el primer combo
-	    $subsubcategoria = array();
-	    $subsubcategoria = "<h3 class='text-center'>Selecciona un tipo de producto</h3>";
-	    $sqlSyntax = 'SELECT subsubcategoria FROM 
-				(
-					SELECT * FROM producto
-					ORDER BY subsubcategoria
-				) t1
-				WHERE subcategoria = "'.$_POST['subCategoria'].'" GROUP BY subcategoria';
-
-		$result= @mysql_query($sqlSyntax);
-	    if ($result == FALSE) { die(@mysql_error()); }
-	  	$subsubcategoria .= '<select id="comboSubsubcategoria" class="form-control"><option value="0">Selecciona una opción</option>';
-		while($row = mysql_fetch_array($result)){
-	     $subsubcategoria .= '<option value="'.$row['subsubcategoria'].'">'.$row['subsubcategoria'].'</option>';
-	  	}
-	  	$subsubcategoria .= '</select>';
-	    // devolvemos el arreglo
-	    echo $subsubcategoria;
 	}
 ?>
