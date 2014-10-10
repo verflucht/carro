@@ -133,17 +133,17 @@
 
 		<div class="row" style="margin-top: 20px;">
 			<h3 class="text-center" style="margin-bottom:20px;">SELECCIONE UN MODO PARA COMPARTIR SU LISTA</h3>
-			<div class="col-xs-3 col-xs-offset-4">
+			<div class="col-xs-2 col-xs-offset-4">
 			<form action="" method="post" accept-charset="utf-8">
 				<input type="hidden" name="inputText" value="mail">
 				<button type="submit" class="inForm" name="SubmitButton"><img src="img/botones/mail.png" alt=""></button>
 			</form>
 			</div>
 
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 				<form action="" method="post" accept-charset="utf-8">
 				<input type="hidden" name="inputText" value="facebook">
-				<button type="submit" class="inForm" name="SubmitButton"><img src="img/botones/facebook2.png" alt=""></button>
+				<button type="submit" class="inForm" name="SubmitButton" disabled><img width="80" src="img/botones/facebook2.png" alt=""></button>
 			</form>
 			</div>
 		</div>
@@ -160,6 +160,7 @@
 				      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
 				    </div>
 				    <div class="col-sm-4" style="padding-left:0;">
+
 				      <button style="border: 1 px; border-radius: 5px;" id="'.$_SESSION['id_lista'].'" value="'.$_SESSION['id_lista'].'" type="submit" class="btn btn-success btn-add">+</button>
 				    </div>				  
 				  </div>
@@ -173,11 +174,10 @@
 
 </div>
 <br><br>
- <div class="col-xs-5 col-xs-offset-5">
+ <div class="col-xs-3 col-xs-offset-5">
  	<button style="border: 1 px; border-radius: 5px;" type="submit" class="btn btn-info btn-lg">Compartir</button>
 </div>
 </form>
-
  
 </body>
 </html>

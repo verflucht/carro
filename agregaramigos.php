@@ -11,6 +11,7 @@
 
 	if (isset($_POST['id'])) {
 		$_SESSION['id_lista'] = $_POST['id'];
+		$_SESSION['first'] = 1;
 		# code...
 		//echo $_POST['id']; //id_lista
 		//echo $_POST['mail']; //mail a compartir
@@ -59,6 +60,5 @@
 			 </div>
 
 		';
-
 	}
 ?>

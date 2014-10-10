@@ -198,6 +198,35 @@
 		    });
 		}); 
     </script>
+    <script type="text/javascript">
+    	$(document).on('click', '.verlista', function () {    
+			
+			//var idProducto = this.id;
+			//var nombreProducto = ;
+        		$.ajax({
+		          type: "POST",
+		          url: "verlista.php",
+		          data: {},
+		          cache: false,
+		          success: function(result){
+		            if (result == ''){
+		              alert("error");
+		            }
+		            else{
+		              alert(result);
+		              $('#modallista').html(" ");
+		              $('#modallista').html(result);
+
+		              $('#modalVerlista').modal('show');
+
+		            }
+		            //  $("#lista").html(result);
+		            
+		          }
+		        });
+
+		});
+    </script>
 </head>
 <body>
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -290,6 +319,7 @@
     </div>
     <div id="resultadosBusqueda"></div>
 
-     
+
+
 </body>
 </html>

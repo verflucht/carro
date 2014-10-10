@@ -251,3 +251,29 @@ height:100px;
 	font-weight: bold
 }*/
 
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 300px;
+    height: 30px;
+    margin: 0 auto;
+    margin-left: 600px;
+    background-color: none;
+    padding-bottom: 50px;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+button:hover {
+    background: none;
+    border: none;
+}
+
+button:active {
+    background: none;
+    border: none;
+}

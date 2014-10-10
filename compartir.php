@@ -36,6 +36,8 @@
     $result= @mysql_query($compartir); //Se ejecuta el query de $sqlSyntax  
     if ($result == FALSE) { die(header('Location: listas.php?error=1')); }
 
+    unset($_SESSION['first']);
+
     header('Location: listas.php');
 
  ?>
