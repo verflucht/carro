@@ -9,41 +9,37 @@
 	require_once 'mysqlConnection.php';
 	mysql_query("SET NAMES 'utf8'");
 
-	if(isset($_POST['subCategoria'])) {
 
-		// esta función se va a llamar al cargar el primer combo
-	    $subsubcategoria = array();
-	    $subsubcategoria = "<h3 class='text-center'>Selecciona un tipo de producto</h3>";
-	    $sqlSyntax = 'SELECT subsubcategoria FROM 
-				(
-					SELECT * FROM producto
-					ORDER BY subsubcategoria
-				) t1
-				WHERE subcategoria = "'.$_POST['subCategoria'].'" GROUP BY subcategoria';
-
-		$result= @mysql_query($sqlSyntax);
-	    if ($result == FALSE) { die(@mysql_error()); }
-	  	$subsubcategoria .= '<select id="comboSubsubcategoria" class="form-control"><option value="0">Selecciona una opción</option>';
-		while($row = mysql_fetch_array($result)){
-	     $subsubcategoria .= '<option value="'.$row['subsubcategoria'].'">'.$row['subsubcategoria'].'</option>';
-	  	}
-	  	$subsubcategoria .= '</select>';
-	    // devolvemos el arreglo
-	    echo $subsubcategoria;
-	}
-
-	else {
-
-		if (isset($_POST['subSubcategorias'])) {
-			$_SESSION['subsubcategorias'] = $_POST['subSubcategorias'];
+		if (isset($_SESSION['facebook'])){
+			$id_facebook = $_SESSION['id_fb'];
+			$sqlSyntax = 'SELECT id_usuario FROM usuario WHERE id_facebook = '.$id_facebook;
+			$result = mysql_query($sqlSyntax) or die(mysql_error());
+			$row = mysql_fetch_array($result);
+			$id_usuario = $row['id_usuario'];
 		}
 
-		//echo $_SESSION['subsubcategorias'];
-
-		#echo $_POST['busqueda'];
-		//Query of listado database
-		$sqlSyntax= "SELECT * FROM producto WHERE subsubcategoria = '".$_SESSION['subsubcategorias']."' ORDER BY marca ASC";
+		else {
+			$id_usuario = $_SESSION['user'];
+		}
+		$sqlSyntax= "SELECT id_lista FROM lista WHERE id_usuario = ".$id_usuario;
 		$result = mysql_query($sqlSyntax) or die(mysql_error());
+		$len = mysql_num_rows($result);
+		$count = 1;
+
+		$productos = 'SELECT id_producto FROM descripcion_producto_lista WHERE id_lista in ( ';
+		while ($row = mysql_fetch_array($result)) {
+			if ($len == $count){
+				$productos .= $row['id_lista'];
+			}
+			else
+				$productos .= $row['id_lista'].',';
+			$count++;
+		}
+
+		$productos .= ') GROUP BY id_producto';
+
+
+		$result = @mysql_query($productos);
 		$num_total_registros = mysql_num_rows($result);
 
 		//echo $num_total_registros;
@@ -65,7 +61,26 @@
 	    $offset = ($pageNum - 1) * $rowsPerPage;
 	    $total_paginas = ceil($num_total_registros / $rowsPerPage);
 
-		$sqlSyntax= "SELECT * FROM producto WHERE subsubcategoria = '".$_SESSION['subsubcategorias']."' ORDER BY marca ASC LIMIT ".$offset.", ".$rowsPerPage; 
+		$sqlSyntax = 'SELECT * FROM producto WHERE id_producto in (';
+
+		$len = mysql_num_rows($result);
+		$count = 1;
+
+		while ($row = mysql_fetch_array($result) ) {
+			if ($len == $count) {
+				$sqlSyntax .= $row['id_producto'];
+				break;
+			}
+			else{
+				$sqlSyntax .= $row['id_producto'].',';
+			}
+			$count++;	
+		}
+
+		$sqlSyntax .= ") ORDER BY marca ASC LIMIT ".$offset.", ".$rowsPerPage;
+		
+		@mysql_query($sqlSyntax);
+
 		$listado = mysql_query($sqlSyntax) or die(mysql_error());
 
 		//Output results
@@ -191,7 +206,7 @@
 		                <td><p><strong>'.$row['descripcion'].'</strong></p></td>
 		                <td><center><strong style="font-size: 20px;">'.$row['precio_lider'].'</strong></center></td>
 		                <td><center><strong style="font-size: 20px;">'.$row['precio_jumbo'].'</strong></center></td>
-		                <td class="text-center" style="width:80px;"><input  id="id_'.$row["id_producto"].'" type="number" class="form-control" data-min="0" data-max="10" data-wrap="true"></td>
+		                <td class="text-center" style="width:80px;"><input  type="number" id="id_'.$row['id_producto'].'" class="form-control" data-min="0" data-max="10" data-wrap="true"></td>
 		                             
 		            ';
 		            
@@ -227,6 +242,6 @@
 		mysql_close();
 		// This echo for jquery 
 		echo $output_string;
-		#json_encode($output_string);
-	}
+
+
 ?>

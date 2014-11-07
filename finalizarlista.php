@@ -40,9 +40,9 @@
 	    unset($_SESSION['lista']);
 	    unset($_SESSION['id_lista']);
 
-	    //header('Location: listas.php');
+	    header('Location: listas.php');
     }
     else {
-    	//header('Location: error.php');
+    	header('Location: error.php');
     }
  ?>

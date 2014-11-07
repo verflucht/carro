@@ -22,21 +22,16 @@
     if ($result == FALSE) { die(@mysql_error()); }
 
    $row = mysql_fetch_array($result);
-    if (strlen($row['url_foto']) == ""){
-    	if($row['sexo'] == "1")
-    		$row['url_foto'] = "img/default-user-female.png";
-    	else
-    		$row['url_foto'] = "img/default-user-men.png";
-	}
+	if ($row['sexo'] == "1")
+		$row['url_foto'] = "img/default-user-female.png";
+	else
+		$row['url_foto'] = "img/default-user-men.png";
 	$id_usuario = $row['id_usuario'];
 	$_SESSION['id_usuario'] = $id_usuario;
 	$nombre_usuario = $row['nombre'];
 	$_SESSION['nombre_usuario'] = $row['nombre'];
-
-	
-
 ?>
-¡²²
+
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html lang="es">
@@ -59,7 +54,8 @@
 			    $(document).on('click', '.btn-add', function(e)
 			    {
 			        var id = this.id
-			        var mail = $('#inputEmail').val();
+			    
+ 					var mail = $('#inputEmail').val();
 			        $.ajax({
 						type: "POST",
 						url: "agregaramigos.php",
@@ -71,6 +67,33 @@
 							}
 							else{
 								$("#amigos").append(result);
+							}
+							//$("#amigos").html(" ");
+							
+							//$("#amigos").html(result);
+						}
+					});
+				});
+			});
+
+    </script>
+    <script type="text/javascript">
+    	$(function()
+			{
+			    $(document).on('click', '.facebook', function(e)
+			    {	
+			    	$("#amigos").html('<div class="container" style="margin-top: 0px;"><div class="row" style="margin-left:320px;"><img src="img/loading/loading.gif"> </div></div>');	    
+			        $.ajax({
+						type: "POST",
+						url: "agregaramigosfacebook.php",
+						data: {},
+						cache: false,
+						success: function(result){
+							if (result == '') {
+								alert("Usuario no Encontrado, intenta otra vez");
+							}
+							else{
+								$("#amigos").html(result);
 							}
 							//$("#amigos").html(" ");
 							
@@ -141,10 +164,10 @@
 			</div>
 
 			<div class="col-xs-2">
-				<form action="" method="post" accept-charset="utf-8">
+				
 				<input type="hidden" name="inputText" value="facebook">
-				<button type="submit" class="inForm" name="SubmitButton" disabled><img width="80" src="img/botones/facebook2.png" alt=""></button>
-			</form>
+				<button type="submit" class="inForm facebook" name="SubmitButtonFacebook"><img width="80" src="img/facebook.png" alt=""></button>
+			
 			</div>
 		</div>
 <?php 
@@ -165,7 +188,8 @@
 				    </div>				  
 				  </div>
 				';
-		}   
+		}
+
  ?>
 
 <br><br><br>

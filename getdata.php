@@ -27,10 +27,12 @@ if(!$listado)
 elseif(!mysql_num_rows($listado))
 {
     mysql_close();
+
+    
     $output_string = '
     <div class="container">
         <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
                 <div class="alert alert-danger">
                     <p>
                     No se encontraron resultados para tu busqueda, intenta con otro producto!.</p>
@@ -42,7 +44,23 @@ elseif(!mysql_num_rows($listado))
 }
 else
 {
-    $output_string = '<div class="container" style="margin-top: 30px;"><div class="row">';
+    $output_string = '<div class="container" style="margin-top: 30px;">
+                        <p>    Los productos seran agregados a la lista <strong>Nombre LISTA<strong>...Cambiar Lista</p>
+                        <div class="row">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Imagen</th>
+                                    <th class="text-center">Marca</th>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center"><img width="50" src="img/lider-color.png" style="margin-top: 5px; margin-bottom: 5px;"></th>
+                                    <th class="text-center"><img width="50" src="img/jumbo-color.png" style="margin-top: 5px; margin-bottom: 5px;"></th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Agregar</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
     while($row = mysql_fetch_assoc($listado))
     {
         $logo_lider = "img/lider-color.png";
@@ -56,7 +74,7 @@ else
             $logo_lider = "img/lider-gris.png";
         }
         else{
-            $row['precio_lider'] = "$".$row['precio_lider'];
+             $row['precio_lider'] = '$'.number_format( $row['precio_lider'], 0, '', '.');
         }
 
         if (strlen($row['precio_jumbo']) == 0){
@@ -64,10 +82,24 @@ else
             $logo_jumbo = "img/jumbo-gris.png";
         }
         else{
-            $row['precio_jumbo'] = "$".$row['precio_jumbo'];
+            $row['precio_jumbo'] = '$'.number_format($row['precio_jumbo'], 0, '', '.');
         }
-
         $output_string .= '
+            <tr>
+                <td><img class="producto" src="'.$row['url_imagen'].'" width="50" alt=""></td>
+                <td><p><strong>'.$row['marca'].'</strong></p></td>
+                <td><p><strong>'.$row['descripcion'].'</strong></p></td>
+                <td><center><strong style="font-size: 20px;">'.$row['precio_lider'].'</strong></center></td>
+                <td><center><strong style="font-size: 20px;">'.$row['precio_jumbo'].'</strong></center></td>
+                <td><input type="number" name="cantidad" min="0" max="10"></td>
+                <td class="text-center"><button type="button" class="btn btn-default btn-lg" style="border-style:none;">
+                    <span style="color:green;"class="glyphicon glyphicon-plus"></span></button>
+                </td>
+
+            </tr>
+            
+    ';
+        $output_string2 .= '
             <div class="item col-xs-6" style="height: auto; border: 1px; border-style: solid; margin-bottom: 15px;">
                 <div class="col-xs-3">
                     <img class="producto" src="'.$row['url_imagen'].'" alt="">
@@ -94,7 +126,7 @@ else
             </div>
         ';
     }
-    $output_string .= '</div></div>';
+    $output_string .= '</tbody></div></div>';
 }
 mysql_close();
 // This echo for jquery 

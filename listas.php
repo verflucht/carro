@@ -59,6 +59,7 @@
 			$('.prices').on('click', function() {
 	    		var id = this.id
 	    		var nombre_lista = $('.nombre_lista').text();
+	    		$("#lista").html('<div class="container" style="margin-top: 0px;"><div class="row" style="margin-left:300px;"><img src="img/loading/loading.gif"> </div></div>');
 				$.ajax({
 					type: "POST",
 					url: "mostrarprecios.php",
@@ -99,6 +100,7 @@
   	$(function() {
 		$('.tipoLista').on('click', function() {
     		var id = this.id
+    		$(".listas").html('<div class="container" style="margin-top: 100px;"><div class="row" style="margin-left:300px;"><img src="img/loading/loading.gif"> </div></div>');
 			$.ajax({
 				type: "POST",
 				url: "tipolista.php",
@@ -120,6 +122,7 @@
   <script type="text/javascript">
   	$(document).ready(function(){
   		var id = "carga";
+    	$(".listas").html('<div class="container" style="margin-top: 100px;"><div class="row" style="margin-left:300px;"><img src="img/loading/loading.gif"> </div></div>');
   		$.ajax({
 			type: "POST",
 			url: "tipolista.php",
@@ -181,14 +184,13 @@
 		<div class="row" style="margin-top: 30px;">
 			<center><img src="img/barra_roja.png" alt="" style="height: 3px; width: 80%; "></center>
 		</div>
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-4">
-				<a class="btn btn-success btn-lg btn-block" style="margin-top:40px; border-radius: 5px;" data-toggle="modal" data-target="#crearlista">Crear Lista</a>
-			</div>
-		</div>
+
 		<div class="row" style="margin-top: 20px;">
-			<a class="tipoLista" id="propia"><div class="col-xs-5 	" style="background-color: #ED3237;	color: white!important; font-size: 20px;  padding-top: 10px;"><p class="text-center">Propias</p></div></a>
-			<a class="tipoLista" id="compartida"><div class="col-xs-5 col-xs-offset-2	" style="background-color: #ED3237;	color: white!important; font-size: 20px;  padding-top: 10px;"><p class="text-center">Compartidas</p></div></a>
+			<ul class="nav nav-tabs nav-justified" role="tablist">
+				<li role="presentation" class="tipoLista" id="propia"><a href="#">PROPIAS</a></li>
+				<li role="presentation"  class="tipoLista" id="compartida"><a href="#">COMPARTIDAS</a></li>
+				<li role="presentation"><a href="#" data-toggle="modal" data-target="#crearlista">+ CREAR LISTA</a></li>
+			</ul>
 		</div>
 		<div class="row col-xs-12 custyle">
                 
@@ -201,7 +203,8 @@
 	                            <th class="text-center">Nombre Lista</th>
 	                            <th class="text-center">Usuario</th>
 	                            <th class="text-center">Fecha Ingreso</th>
-	                            <th class="text-center">Comparar Precios</th>
+	                            <th class="text-center">Lider</th>
+	                            <th class="text-center">Jumbo</th>
 	                            <th class="text-center">Compartir</th>
 	                            <th class="text-center">Editar</th>
 	                            <th class="text-center">Eliminar</th>
@@ -224,7 +227,9 @@
       			<div class="modal-body" style="padding-bottom: 0">
         			<form method="POST" action="categorias.php">
 	        			<div class="form-group">
-	   			 			<input type="text" class="form-control" id="nombrelista" name="nombrelista" placeholder="Nombre Lista">
+	   			 			<input type="text" class="form-control" id="nombrelista" name="nombrelista" placeholder="Nombre Lista"><br>
+   			 				Desea Crear una lista rápida?
+	   			 			<input type="checkbox"  id="esRapida" name="esRapida" style="margin-left: 25px;">
 	  					</div>
 		      			<div class="modal-footer">
 		        			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

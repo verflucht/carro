@@ -35,6 +35,9 @@
 		$numItems = count($contenido_lista);
 		$i = 0;
 		foreach ($contenido_lista as $item => $value){
+			if ($value == '') {
+				$value = 0;
+			}
 			if(++$i === $numItems){
 				//Ultimo elemento del array
 				$sqlSyntax .= '('.$id_lista.','.$item.','.$value.',0)';

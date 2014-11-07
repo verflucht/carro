@@ -67,6 +67,7 @@
 				}
 				else
 				{
+					$("#lista").html('<div class="container" style="margin-top: 70px;"><div class="row" style="margin-left:300px;"><img src="img/loading/loading.gif"> </div></div>');
 					// AJAX Code To Submit Form.
 					$.ajax({
 					type: "POST",
@@ -132,18 +133,16 @@
 			<center><img src="img/barra_roja.png" alt="" style="height: 3px; width: 80%; "></center>
 		</div>
 		<div class="row" style="margin-top: 10px; margin-bottom: 20px;">
-			<center><h1>COMPARA PRECIOS</h1></center>
-
-		</div>
-		<div class="row" style="font-family: 'Open Sans', sans-serif; margin-bottom: 40px;">
-			<div class="col-xs-4"></div>
-			<div class="col-xs-3">
+			<div class="col-xs-3"><h3 >Buscar Producto</h3></div>
+			<div class="col-xs-3" style="margin-top: 10px;">
 				<input type="text" id="producto" class="form-control input-lg col-xs-3" style="border-radius: 0px;" name="" value="">
 			</div>
-			<div class="col-xs-4" style="padding-left: 0px;">
+			<div class="col-xs-4" style="padding-left: 0px; margin-top:10px;" >
 				<button type="button" name="getdata" id="getdata" class="buscar btn btn-lg btn-warning">Buscar</button>
 			</div>
+
 		</div>
+		
 	</div>
 
 	<div id="lista"></div>

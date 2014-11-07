@@ -10,6 +10,7 @@
 <head>
   <title>CheckMart>> La Revolución en Compras</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="icon" type="image/png" href="/img/favicon.png" >
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <link rel="stylesheet" href="css/prueba.css">
@@ -62,6 +63,8 @@
   <body>
     <?php
       if (isset($_SESSION['facebook'])){
+       
+        $_SESSION['amigos'] = $graphObject['data'];
         $_SESSION['id_fb'] = $facebook_user->getId();
         $_SESSION['sexo'] = $facebook_user->getProperty("gender");
         $_SESSION['imagen_fb'] = 'https://graph.facebook.com/'.$_SESSION['id_fb'].'/picture?width=500';

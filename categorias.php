@@ -156,6 +156,8 @@
 					    $result= @mysql_query($sqlSyntax); //Se ejecuta el query de $sqlSyntax  
 					    if ($result == FALSE) { die(@mysql_error()); }
 					    $_SESSION['id_lista'] =  mysql_insert_id();
+					    if(isset($_POST['esRapida']))
+					    	header('Location: listarapida.php');
 					}
 			?>
 		</div>

@@ -14,7 +14,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://checkmart.cl/index.php');
+$helper = new FacebookRedirectLoginHelper('http://localhost/carro/index.php');
 
 try {
 	$session = $helper->getSessionFromRedirect();
@@ -30,15 +30,23 @@ try {
 		$request = new FacebookRequest($session, 'GET', '/me');
 		$response = $request->execute();
 		$graphObjectClass = $response->getGraphObject(GraphUser::className());
-
 		$facebook_user = $graphObjectClass;
 
-		$_SESSION['friendlist'] = (new FacebookRequest(
-			  $session, 'GET', '/me/friends'
-			))->execute()->getGraphObject(GraphUser::className());
+		//$request = new FacebookRequest($session, 'GET', '/me/friends');
+		//$response = $request->execute();
+		//$graphObject = $response->getGraphObject(GraphUser::className());
+		$graphObject = (new FacebookRequest($session, 'GET', '/me/friends'))
+    		->execute()
+    		->getGraphObject()
+  			->asArray();
 
-			//echo '<pre>';
-			//print_r($user_friends);
+		//$request = new FacebookRequest($session, 'GET', '/me/friends');
+		//$response = $request->execute();
+		//$graphObjectClass = $response->getGraphObject(GraphUser::className());
+		//$facebook_user = $graphObjectClass;
+		//print_r($facebook_user);
+		//$graphObject = $response->getGraphObject(GraphUser::className());
+
 	endif;
 } catch(FacebookRequestException $ex) {
   // When Facebook returns an error
